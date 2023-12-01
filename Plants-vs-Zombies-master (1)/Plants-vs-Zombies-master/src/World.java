@@ -75,7 +75,7 @@ public class World extends JPanel implements ActionListener{
             }
         });
 
-        rec[0] = new Rectangle(445, 525, 135, 42);
+        rec[0] = new Rectangle(375, 425, 250, 80);
 
         Audio.menu();
         timer.start();
