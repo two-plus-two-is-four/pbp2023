@@ -16,6 +16,7 @@ import java.awt.geom.Ellipse2D;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -45,6 +46,7 @@ public class World extends JPanel implements ActionListener{
     private static int wave=0; //zombies wave
     private Timer timer; //set timer
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private int stage = 1; // 1 스테이지로 설정
 
     private Player player;  
     private Plant<Integer> plant = new Plant<Integer>(0, 0, 0);
@@ -603,7 +605,15 @@ public class World extends JPanel implements ActionListener{
 
     private void getImg(){
         try{ //load image
-            img[0]=t.getImage(getClass().getResource("Assets/image/Background.jpg"));
+        	if(stage==1) { // 스테이지에 따른 배경 출력
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_morning.png"));
+        	}
+        	else if (stage==2) {
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_dawn.png"));
+			}
+        	else {
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_night.png"));
+        	}
             img[1]=t.getImage(getClass().getResource("Assets/image/Sun.png"));
             img[2]=t.getImage(getClass().getResource("Assets/image/Sunflower.png"));
             img[3]=t.getImage(getClass().getResource("Assets/image/Peashooter.png"));
