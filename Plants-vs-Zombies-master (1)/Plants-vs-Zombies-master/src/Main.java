@@ -11,7 +11,7 @@ public class Main{
         
         JFrame frame = new JFrame();
         frame.add(new World());
-        frame.setTitle("Plants vs Zombies");
+        frame.setTitle("Protect the King");
         frame.setBounds(127, 0, 1024, 625+inset);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
