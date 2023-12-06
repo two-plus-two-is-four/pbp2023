@@ -7,15 +7,15 @@ import javax.sound.sampled.Clip;
 
 public class Audio{
     private static Clip[] clip = new Clip[20]; 
-    private static Timer timer; //set timer
+    private static Timer timer; //타이머 설정
 
     static{
         try{
-            // create clip reference 
+            // clip reference 생성
             for(int i=0;i<20;i++){
                 clip[i] = AudioSystem.getClip(); 
             }
-            // open audioInputStream to the clip 
+            // clip에서 사운드 재생 
             clip[0].open(AudioSystem.getAudioInputStream(Audio.class.getResource(("Assets/wav/Menu.wav")))); 
             clip[1].open(AudioSystem.getAudioInputStream(Audio.class.getResource(("Assets/wav/Background.wav")))); 
             clip[2].open(AudioSystem.getAudioInputStream(Audio.class.getResource(("Assets/wav/Win.wav")))); 
@@ -41,7 +41,7 @@ public class Audio{
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
         } 
 
-        //play zombies coming after 12 seconds
+        //12초 후 좀비 생성 시작
         timer = new Timer(12000, new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 clip[4].setMicrosecondPosition(0);

@@ -3,9 +3,9 @@ import javax.sound.sampled.Clip;
 
 public class Pea{
     private int type, damage;
-    private int x, y; //array for pea location [5][9]
-    private int coorX, coorY; //pea coordinate
-    private static Point[][] pea_f = new Point[5][9]; //array for pea coordinate
+    private int x, y; //공격 배열 설정 [5][9]
+    private int coorX, coorY; //추사체 위치설정
+    private static Point[][] pea_f = new Point[5][9]; //투사체 위치를 정하는 배열
     private Clip clip;
     
     public Pea(int type, int x, int y){
@@ -25,7 +25,7 @@ public class Pea{
     static{
         for(int i=0;i<5;i++){
             for(int j=0;j<9;j++){
-                //set coordinate for pea field
+                //투사체 위치 설정
                 pea_f[i][j] = new Point(296+j*81+28, 117+i*98-19);
             }
         }
@@ -40,18 +40,18 @@ public class Pea{
     public int getDamage(){return damage;}
 
     public void move(){
-        coorX+=6; //speed = 6
+        coorX+=6; // 투사체 속도
     }
-    public void convert(int i, int j){ //convert pea position to coordinate
+    public void convert(int i, int j){ // 투사체 위치를 coor에 따라 변경
         coorX=pea_f[i][j].getX();
         coorY=pea_f[i][j].getY();
     }
 
-    public void splat(){ //play splat sound
+    public void splat(){ // 타격음 재생
         try{
-            // create clip reference 
+            // clip reference 생성 
             clip = AudioSystem.getClip();
-            // open audioInputStream to the clip 
+            // clip 에서 소리 재생 
             clip.open(AudioSystem.getAudioInputStream(Audio.class.getResource(("Assets/wav/Splat.wav")))); 
         }catch(Exception ex){ 
             ex.printStackTrace();

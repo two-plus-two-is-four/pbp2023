@@ -7,11 +7,11 @@ import javax.sound.sampled.Clip;
 public class Plant<T> extends Actor{
     private T type;
     private boolean idle=true, threaten=false, exploded=false;
-    private Timer timer, timer2, timer3; //set timer
-    private int x, y; //array for plant location [5][9]
+    private Timer timer, timer2, timer3; // 유닛 공격속도를 정하기 위한 타이머 설정
+    private int x, y; //유닛 위치를 정하는 변수
     private int cw=74, ch=76; //cherrybomb
     private static int[][] occ = new int[5][10];
-    private static Point[][] coor = new Point[5][9]; //array for plants coordinate
+    private static Point[][] coor = new Point[5][9]; //유닛 위치를 정하는 배열
     private Clip clip, clip2;
     private Thread tcherry; //thread for waiting time
     
