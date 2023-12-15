@@ -12,6 +12,7 @@ public class Zombie extends Actor implements Comparable<Zombie>{
     private static int[] arrY = new int[5]; //zombie y coordinate
     private static int n=0, max=50, interval, random, wave=20;
     private static boolean gameOver=false;
+    public boolean att = false;
     private static Timer timer; //spawning zombie timer
     private Timer timer2; //attacking plant timer
     private Clip clip;
@@ -20,6 +21,7 @@ public class Zombie extends Actor implements Comparable<Zombie>{
         this.type=type;
         coorX=1020f;
         coorY=arrY[setLane()];
+        
         if(type==1){ //Normal zombie
             super.health=50;
             zombieDamage=12;
@@ -192,6 +194,7 @@ public class Zombie extends Actor implements Comparable<Zombie>{
             A: for(Plant plant: World.plants){
                 if(plant.getX()==lane && plant.getY()==yp){
                     timer2.start();
+                    att=true;
                     if(plant.isDead()){ //plant dies
                         plant.stop(); //stop plant's activity
                         Plant.setOcc(lane, yp); //set spot to empty
@@ -203,6 +206,7 @@ public class Zombie extends Actor implements Comparable<Zombie>{
             }
         }else{ //field empty
             move();
+            att=false;
         }
     }
     public void move(){
