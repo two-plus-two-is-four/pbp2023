@@ -12,13 +12,20 @@ import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-
+import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
+import java.io.File;
+import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -225,13 +232,17 @@ public class World extends JPanel implements ActionListener{
 
                 //draw zombie
                 if(zombie.getType()==1){ //standard zombie
-                    g.drawImage(img[8], Math.round(fxp), zombie.getCoorY(), pwidth+11, pheight+53, this);   
+                	if(zombie.att == true) {
+                		g.drawImage(img[20], Math.round(fxp), zombie.getCoorY(), pwidth+53, pheight+53, this);
+                	} else {
+                		g.drawImage(img[8], Math.round(fxp), zombie.getCoorY(), pwidth+53, pheight+53, this);
+                	}
                 }else if(zombie.getType()==2){ //football zombie
-                    if(zombie.getHealth()>=45){ //zombie uses helmet
-                        g.drawImage(img[9], Math.round(fxp), zombie.getCoorY(), this);
-                    }else{ //zombie doesn't use helmet
-                        g.drawImage(img[20], Math.round(fxp), zombie.getCoorY(), this);
-                    }
+                	if(zombie.att == true) {
+                		g.drawImage(img[37], Math.round(fxp), zombie.getCoorY(), pwidth+53, pheight+53, this);
+                	} else {
+                		g.drawImage(img[9], Math.round(fxp), zombie.getCoorY(), pwidth+53, pheight+53, this);
+                	}
                 }else if(zombie.getType()==3){ //flying zombie
                     g.drawImage(img[33], Math.round(fxp), zombie.getCoorY()-15, 101, 120, this);
                     zombie.move();
@@ -600,7 +611,6 @@ public class World extends JPanel implements ActionListener{
         }
     }
 
-
     private void getImg(){
         try{ //load image
             img[0]=t.getImage(getClass().getResource("Assets/image/Background.jpg"));
@@ -611,8 +621,8 @@ public class World extends JPanel implements ActionListener{
             img[5]=t.getImage(getClass().getResource("Assets/gif/Sunflower.gif"));
             img[6]=t.getImage(getClass().getResource("Assets/gif/Peashooter.gif"));
             img[7]=t.getImage(getClass().getResource("Assets/gif/Repeater.gif"));
-            img[8]=t.getImage(getClass().getResource("Assets/gif/Zombie.gif"));
-            img[9]=t.getImage(getClass().getResource("Assets/gif/Zombief.gif"));
+            img[8]=t.getImage(getClass().getResource("Assets/gif/Black_Werewolf_Walk.gif")); //좀비를 웨어울프로 변경
+            img[9]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Walk.gif"));
             img[10]=t.getImage(getClass().getResource("Assets/image/Pea_p.png"));
             img[11]=t.getImage(getClass().getResource("Assets/image/Wasted.png"));
             img[12]=t.getImage(getClass().getResource("Assets/image/Tryagain.png"));
@@ -623,7 +633,7 @@ public class World extends JPanel implements ActionListener{
             img[17]=t.getImage(getClass().getResource("Assets/image/Playagain.png"));
             img[18]=t.getImage(getClass().getResource("Assets/image/Brain.png"));
             img[19]=t.getImage(getClass().getResource("Assets/image/Pea_r.png"));
-            img[20]=t.getImage(getClass().getResource("Assets/gif/Zombief_half.gif"));
+            img[20]=t.getImage(getClass().getResource("Assets/gif/Black_Werewolf_Attack.gif"));
             img[21]=t.getImage(getClass().getResource("Assets/image/Shovel1.png"));
             img[22]=t.getImage(getClass().getResource("Assets/image/Shovel2.png"));
             img[23]=t.getImage(getClass().getResource("Assets/image/Shovel3.png"));
@@ -636,19 +646,19 @@ public class World extends JPanel implements ActionListener{
             img[30]=t.getImage(getClass().getResource("Assets/image/Cherry.png"));
             img[31]=t.getImage(getClass().getResource("Assets/image/Powie.png"));
             img[32]=t.getImage(getClass().getResource("Assets/image/Cherry_g.png"));
-            img[33]=t.getImage(getClass().getResource("Assets/gif/Zombie_fly.gif"));
+            img[33]=t.getImage(getClass().getResource("Assets/gif/Ghost_Walk.gif"));
             img[34]=t.getImage(getClass().getResource("Assets/image/Background_menu.png"));
             img[35]=t.getImage(getClass().getResource("Assets/image/Wallnut.png"));
             img[36]=t.getImage(getClass().getResource("Assets/image/Wallnut_g.png"));
-            img[37]=t.getImage(getClass().getResource("Assets/gif/Wallnut_full.gif"));
-            img[38]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif"));
+            img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
+            img[38]=t.getImage(getClass().getResource("Assets/gif/Wallnut_Half.gif"));
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
         }
     }
 
-    private void init(){    
+    private void init(){
         //create rectangle for plant menu and end game
         rec[2] = new Rectangle(0, 0, 1024, 626); //end
         rec[3] = new Rectangle(23, 156, pwidth+73, pheight+21); //sunflower
