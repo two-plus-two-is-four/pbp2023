@@ -8,6 +8,8 @@ import javax.sound.sampled.Clip;
 public class Zombie extends Actor implements Comparable<Zombie>{
     private int type, zombieDamage, lane, coorY, yp;
     private float zombieSpeed, coorX; //zombie x coordinate
+    private static float speedbonus = 1.0f;
+    private static double Dmgbonus = 1, healthbonus = 1;
     private int[] column = {296,377,458,539,620,701,782,863,944}; //9
     private static int[] arrY = new int[5]; //zombie y coordinate
     private static int n=0, max=50, interval, random, wave=20;
@@ -21,18 +23,17 @@ public class Zombie extends Actor implements Comparable<Zombie>{
         this.type=type;
         coorX=1020f;
         coorY=arrY[setLane()];
-        
         if(type==1){ //Normal zombie
-            super.health=50;
-            zombieDamage=12;
-            zombieSpeed=0.3f;
+            super.health=(int)(50 * healthbonus);
+            zombieDamage=(int)(12 * Dmgbonus);
+            zombieSpeed=0.3f * speedbonus;
         }else if(type==2){ //Football zombie
-            super.health=90;
-            zombieDamage=15;
-            zombieSpeed=0.5f;
+            super.health=(int)(90 * healthbonus);
+            zombieDamage=(int)(15 * Dmgbonus);
+            zombieSpeed=0.5f * speedbonus;
         }else if(type==3){ //Flying zombie
-	        super.health=60;
-            zombieSpeed=0.4f;
+	        super.health=(int)(60 * healthbonus);
+            zombieSpeed=0.4f * speedbonus;
         }
     }
 
@@ -235,6 +236,24 @@ public class Zombie extends Actor implements Comparable<Zombie>{
     public static void resetN(){n=0;}
     
 
+    public static void setStageBonus(int stage) { //stage에 따라 몬스터 강화
+    	if(stage == 1) { //morning
+    		speedbonus = 1.0f;
+    		healthbonus = 1;
+    		Dmgbonus = 1;
+    	}
+    	else if(stage == 2) { //dawn
+    		speedbonus = 1.1f;
+    		healthbonus = 1.2;
+    		Dmgbonus = 1;
+    	}
+    	else{ //night
+    		speedbonus = 1.25f;
+    		healthbonus = 1.4;
+    		Dmgbonus = 1.5;
+    	}
+    }
+    
     //Audio
     public static void playAudio(){
         if(n==1){

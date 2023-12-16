@@ -64,7 +64,10 @@ public class Player {
     public void setShovel(boolean shovel){
         this.shovel=shovel;
     }
-
+    
+    public void setSunCredits(int credits) {
+    	this.sunCredits = credits;
+    }
     public void plant(){
         switch(choice){
             case 1: sunCredits-=50; break; //sunflower

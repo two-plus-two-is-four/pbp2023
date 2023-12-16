@@ -12,20 +12,14 @@ import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
-import java.awt.image.RGBImageFilter;
-import java.io.File;
-import java.io.IOException;
+
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -52,11 +46,13 @@ public class World extends JPanel implements ActionListener{
     private static int wave=0; //zombies wave
     private Timer timer; //set timer
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private int stage = 3; // 스테이지 설정
 
-    private Player player;  
+    private Player player;
     private Plant<Integer> plant = new Plant<Integer>(0, 0, 0);
     private Pea pea;
     private Sun sun;
+    
 
     public static List<Plant<Integer>> plants = new ArrayList<Plant<Integer>>();
     public static List<Zombie> zombies = new ArrayList<Zombie>();
@@ -82,7 +78,7 @@ public class World extends JPanel implements ActionListener{
             }
         });
 
-        rec[0] = new Rectangle(445, 525, 135, 42);
+        rec[0] = new Rectangle(375, 425, 250, 80);
 
         Audio.menu();
         timer.start();
@@ -93,6 +89,7 @@ public class World extends JPanel implements ActionListener{
         player = new Player();
         Sun.start();
         Zombie.start(16);
+        StageEffect(stage);
         
         getImg(); //load image from disk
         init();
@@ -107,7 +104,39 @@ public class World extends JPanel implements ActionListener{
         repaint();
     }
     
-
+    //stage에 따라 적용되는 효과
+    public void StageEffect(int stage) {
+		switch(stage) {
+			case 1: 
+				Morning();
+				break;
+			case 2:
+				Dawn();
+				break;
+			case 3:
+				Night();
+				break;
+		}
+			
+	}
+	
+	public void Morning() { //stage == 1
+		changeSunCredits(75);
+		Zombie.setStageBonus(stage);
+	}
+	
+	public void Dawn() { //stage == 2
+		Zombie.setStageBonus(stage);
+	}
+	
+	public void Night() { //stage != 1 and 2
+		Zombie.setStageBonus(stage);
+	}
+	
+	public void changeSunCredits(int credits) {
+		player.setSunCredits(credits);
+	}
+	
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -611,9 +640,18 @@ public class World extends JPanel implements ActionListener{
         }
     }
 
+
     private void getImg(){
         try{ //load image
-            img[0]=t.getImage(getClass().getResource("Assets/image/Background.jpg"));
+        	if(stage==1) { // 스테이지에 따른 배경 출력
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_morning.png"));
+        	}
+        	else if (stage==2) {
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_dawn.png"));
+			}
+        	else {
+        		img[0]=t.getImage(getClass().getResource("Assets/image/Background_night.png"));
+        	}
             img[1]=t.getImage(getClass().getResource("Assets/image/Sun.png"));
             img[2]=t.getImage(getClass().getResource("Assets/image/Sunflower.png"));
             img[3]=t.getImage(getClass().getResource("Assets/image/Peashooter.png"));
@@ -651,14 +689,14 @@ public class World extends JPanel implements ActionListener{
             img[35]=t.getImage(getClass().getResource("Assets/image/Wallnut.png"));
             img[36]=t.getImage(getClass().getResource("Assets/image/Wallnut_g.png"));
             img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
-            img[38]=t.getImage(getClass().getResource("Assets/gif/Wallnut_Half.gif"));
+            img[38]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif"));
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
         }
     }
 
-    private void init(){
+    private void init(){    
         //create rectangle for plant menu and end game
         rec[2] = new Rectangle(0, 0, 1024, 626); //end
         rec[3] = new Rectangle(23, 156, pwidth+73, pheight+21); //sunflower

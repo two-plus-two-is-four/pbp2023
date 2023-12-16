@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="Plants-vs-Zombies-master/src"/>
-	<classpathentry kind="lib" path="Plants-vs-Zombies-master/PVZ.jar"/>
+	<classpathentry kind="lib" path="Plants-vs-Zombies-master/PVZ.jar" sourcepath="Plants-vs-Zombies-master/PVZ.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
