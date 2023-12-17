@@ -345,13 +345,13 @@ public class World extends JPanel implements ActionListener{
             if(player.getCredits()<150){
             	g.drawImage(img[32], 30, 512, rwidth+7, rheight+6, this); //draw cherrybomb g
                 if(player.getCredits()<100){
-                	g.drawImage(img[15], 33, 339, rwidth+2, rheight+2, this); //draw repeater g
+                	g.drawImage(img[15], 38, 333, rwidth+2, rheight+2, this); //draw 회색빛 마법사 
                     if(player.getCredits()<60){
-                        g.drawImage(img[14], 34, 255, pwidth+2, pheight, this); //draw peashooter g
+                        g.drawImage(img[14], 33, 252, pwidth+2, pheight, this); //draw 회색빛 아처
                         if(player.getCredits()<50){
-                            g.drawImage(img[36], 32, 426, swidth-1, sheight-2, this); //draw wallnut g
+                            g.drawImage(img[36], 38, 426, swidth-1, sheight-2, this); //draw 회색빛 검사
                             if(player.getCredits() < 20) {
-                            	g.drawImage(img[13], 34, 164, swidth, sheight, this); //draw sunflower g
+                            	g.drawImage(img[13], 47, 164, swidth, sheight, this); //draw 회색빛 일꾼
                             	
                             }
                         }
@@ -667,9 +667,9 @@ public class World extends JPanel implements ActionListener{
             img[10]=t.getImage(getClass().getResource("Assets/image/arrow.png")); //화살로 변경
             img[11]=t.getImage(getClass().getResource("Assets/image/Wasted.png"));
             img[12]=t.getImage(getClass().getResource("Assets/image/Tryagain.png"));
-            img[13]=t.getImage(getClass().getResource("Assets/image/Sunflower_g.png"));
-            img[14]=t.getImage(getClass().getResource("Assets/image/Peashooter_g.png"));
-            img[15]=t.getImage(getClass().getResource("Assets/image/Repeater_g.png"));
+            img[13]=t.getImage(getClass().getResource("Assets/image/workman_g.png"));
+            img[14]=t.getImage(getClass().getResource("Assets/image/archer_g.png"));
+            img[15]=t.getImage(getClass().getResource("Assets/image/mage_g.png"));
             img[16]=t.getImage(getClass().getResource("Assets/image/Win.png"));
             img[17]=t.getImage(getClass().getResource("Assets/image/Playagain.png"));
             img[18]=t.getImage(getClass().getResource("Assets/image/Brain.png"));
@@ -690,7 +690,7 @@ public class World extends JPanel implements ActionListener{
             img[33]=t.getImage(getClass().getResource("Assets/gif/Ghost_Walk.gif"));
             img[34]=t.getImage(getClass().getResource("Assets/image/friendly_menu.png")); //아군 유닛 메뉴 이미지
             img[35]=t.getImage(getClass().getResource("Assets/image/Warrior_Idle.png")); //마우스이벤트 불투명 이미지(전사
-            img[36]=t.getImage(getClass().getResource("Assets/image/Wallnut_g.png")); //Wallnut
+            img[36]=t.getImage(getClass().getResource("Assets/image/warrior_g.png")); //Wallnut를 회색 빛 전사
             img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
             img[38]=t.getImage(getClass().getResource("Assets/gif/warrior_Idle.gif")); //Wallnut를 전사
             img[39]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif")); //Wallnut
