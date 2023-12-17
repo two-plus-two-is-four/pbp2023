@@ -673,7 +673,7 @@ public class World extends JPanel implements ActionListener{
             img[16]=t.getImage(getClass().getResource("Assets/image/Win.png"));
             img[17]=t.getImage(getClass().getResource("Assets/image/Playagain.png"));
             img[18]=t.getImage(getClass().getResource("Assets/image/Brain.png"));
-            img[19]=t.getImage(getClass().getResource("Assets/image/Pea_r.png"));
+            img[19]=t.getImage(getClass().getResource("Assets/image/fireball.png"));
             img[20]=t.getImage(getClass().getResource("Assets/gif/Black_Werewolf_Attack.gif"));
             img[21]=t.getImage(getClass().getResource("Assets/image/Shovel1.png"));
             img[22]=t.getImage(getClass().getResource("Assets/image/Shovel2.png"));
