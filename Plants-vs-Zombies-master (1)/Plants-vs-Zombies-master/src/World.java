@@ -693,7 +693,7 @@ public class World extends JPanel implements ActionListener{
             img[36]=t.getImage(getClass().getResource("Assets/image/warrior_g.png")); //Wallnut를 회색 빛 전사
             img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
             img[38]=t.getImage(getClass().getResource("Assets/gif/warrior_Idle.gif")); //Wallnut를 전사
-            img[39]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif")); //Wallnut
+            img[39]=t.getImage(getClass().getResource("Assets/gif/warrior_half.gif")); //Wallnut 전사 피 반이하하
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
