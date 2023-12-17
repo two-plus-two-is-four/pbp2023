@@ -12,7 +12,7 @@ public class Zombie extends Actor implements Comparable<Zombie>{
     private static double Dmgbonus = 1, healthbonus = 1;
     private int[] column = {296,377,458,539,620,701,782,863,944}; //9
     private static int[] arrY = new int[5]; //zombie y coordinate
-    private static int n=0, max=50, interval, random, wave=20;
+    private static int n=0, max=1, interval, random, wave=20;
     private static boolean gameOver=false;
     public boolean att = false;
     private static Timer timer; //spawning zombie timer

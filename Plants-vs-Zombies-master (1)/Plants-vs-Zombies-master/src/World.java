@@ -35,7 +35,7 @@ public class World extends JPanel implements ActionListener{
     //19.pea_r, 20.zombief2, 21.shovel, 22.shovel1, 23.shovel2, 24.progress1, 25.progress2, 26.progress3,
     //27.progress4, 28.hugewave, 29.finalwave, 30.cherry, 31.powie, 32.cherry_g, 33.zombie_fly, 34.background_menu, 
     //35.wallnut, 36.wallnut_g, 37.wallgif_full, 38.wallgif_half
-    private Image[] img = new Image[40];
+    private Image[] img = new Image[43];
     //rec: 0.r_play, 1.r_again, 2.r_end, 3.r_sunflower, 4.r_peashooter, 5.r_repeater, 6.r_wallnut, 7.r_cherrybomb
     private Rectangle[] rec = new Rectangle[8]; //rectangle for menu and others
     private Ellipse2D e_shovel; //ellipse for shovel
@@ -46,7 +46,7 @@ public class World extends JPanel implements ActionListener{
     private static int wave=0; //zombies wave
     private Timer timer; //set timer
     private Toolkit t = Toolkit.getDefaultToolkit();
-    private int stage = 3; // 스테이지 설정
+    private int stage = 2; // 스테이지 설정
 
     private Player player;
     private Plant<Integer> plant = new Plant<Integer>(0, 0, 0);
@@ -58,6 +58,8 @@ public class World extends JPanel implements ActionListener{
     public static List<Zombie> zombies = new ArrayList<Zombie>();
     public static List<Sun> suns = new ArrayList<Sun>();
     public static List<Pea> peas = new ArrayList<Pea>();
+    
+    public static List<Gas> gases = new ArrayList<Gas>();
       
 
     public World(){
@@ -88,6 +90,7 @@ public class World extends JPanel implements ActionListener{
     public void start(){
         player = new Player();
         Sun.start();
+        Gas.startTimer();
         Zombie.start(16);
         StageEffect(stage);
         
@@ -121,7 +124,7 @@ public class World extends JPanel implements ActionListener{
 	}
 	
 	public void Morning() { //stage == 1
-		changeSunCredits(75);
+		changeSunCredits(275);
 		Zombie.setStageBonus(stage);
 	}
 	
@@ -407,6 +410,40 @@ public class World extends JPanel implements ActionListener{
                         itpea_p.remove();
                     }
                 }
+                
+                
+                
+                //gaseffect
+                Iterator<Gas> itGas = gases.iterator();
+                while (itGas.hasNext()) {
+                    Gas gas = itGas.next();
+
+                    if (gas.isWaiting()) {
+                        if (gas.isTgasAlive()) {
+                            g.drawImage(img[41], gas.getX(), gas.getY(), 180, 180, this);
+                            gas.setE(new Ellipse2D.Float(gas.getX(), gas.getY(), 80, 80));
+                        } else {
+                            itGas.remove(); // remove gas when waiting time is over
+                        }
+                    } else {
+                        if (gas.getY() < gas.getLimit()) {
+                            g.drawImage(img[41], gas.getX(), gas.getY(), 180, 180, this);
+                            gas.setE(new Ellipse2D.Float(gas.getX(), gas.getY(), 80, 80));
+                            gas.lower();
+                        } else if (gas.getY() < (gas.getLimit() + 300)) {
+                            if (!gas.isWaiting()) {
+                                gas.startTimer();
+                                gas.setWaiting();
+                            }
+                            if (gas.isTgasAlive()) {
+                                g.drawImage(img[41], gas.getX(), gas.getY(), 180, 180, this);
+                                gas.setE(new Ellipse2D.Float(gas.getX(), gas.getY(), 80, 80));
+                            } else {
+                                itGas.remove(); // remove gas when waiting time is over
+                            }
+                        }
+                    }
+                }
             
                 //draw falling sun
                 Iterator<Sun> its = suns.iterator(); 
@@ -464,6 +501,9 @@ public class World extends JPanel implements ActionListener{
                     if(end_sound){
                         Audio.win(); //play win sound
                         end_sound=false;
+                        stage++;
+                        getImg();
+                        
                     }
                     g2.setColor(Color.WHITE);
                     g2.setComposite(AlphaComposite.SrcOver.derive(0.6f));
@@ -472,7 +512,12 @@ public class World extends JPanel implements ActionListener{
                     rec[1] = new Rectangle(442, 410, 140, 65);
 
                     g.drawImage(img[16],263,130,500,250,this); //win image
-                    g.drawImage(img[17],442,410,140,65,this); //play again image
+                    if (stage > 3) {
+                        g.drawImage(img[17], 442, 410, 140, 65, this); // play again image for stage 3
+                    } else {
+                        g.drawImage(img[40], 442, 410, 180, 105, this); // 
+                    }
+                    
                     
                 }else{ //lose
                     if(end_sound){
@@ -623,6 +668,8 @@ public class World extends JPanel implements ActionListener{
 			            for(Zombie zombie: zombies){
                             zombie.stopEat(); //stop eating plant
                         }
+			            
+                        
                         plants.clear();
                         zombies.clear();
                         Zombie.resetN();
@@ -694,6 +741,10 @@ public class World extends JPanel implements ActionListener{
             img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
             img[38]=t.getImage(getClass().getResource("Assets/gif/warrior_Idle.gif")); //Wallnut를 전사
             img[39]=t.getImage(getClass().getResource("Assets/gif/warrior_half.gif")); //Wallnut 전사 피 반이하하
+            img[40]=t.getImage(getClass().getResource("Assets/image/NextStage.png"));
+            img[41]=t.getImage(getClass().getResource("Assets/gif/gas.gif"));
+            img[42]=t.getImage(getClass().getResource("Assets/gif/Thunder.gif"));
+
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
