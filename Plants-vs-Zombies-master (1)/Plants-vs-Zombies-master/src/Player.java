@@ -70,10 +70,10 @@ public class Player {
     }
     public void plant(){
         switch(choice){
-            case 1: sunCredits-=50; break; //sunflower
-            case 2: sunCredits-=100; break; //peashooter
-            case 3: sunCredits-=200; break; //repeater
-            case 4: sunCredits-=50; break; //wallnut
+            case 1: sunCredits-=20; break; //일꾼
+            case 2: sunCredits-=60; break; //아처
+            case 3: sunCredits-=100; break; //마법사
+            case 4: sunCredits-=50; break; //전사
             case 5: sunCredits-=150; break; //cherrybomb
         }
     }
