@@ -35,7 +35,7 @@ public class World extends JPanel implements ActionListener{
     //19.pea_r, 20.zombief2, 21.shovel, 22.shovel1, 23.shovel2, 24.progress1, 25.progress2, 26.progress3,
     //27.progress4, 28.hugewave, 29.finalwave, 30.cherry, 31.powie, 32.cherry_g, 33.zombie_fly, 34.background_menu, 
     //35.wallnut, 36.wallnut_g, 37.wallgif_full, 38.wallgif_half
-    private Image[] img = new Image[39];
+    private Image[] img = new Image[40];
     //rec: 0.r_play, 1.r_again, 2.r_end, 3.r_sunflower, 4.r_peashooter, 5.r_repeater, 6.r_wallnut, 7.r_cherrybomb
     private Rectangle[] rec = new Rectangle[8]; //rectangle for menu and others
     private Ellipse2D e_shovel; //ellipse for shovel
@@ -177,9 +177,9 @@ public class World extends JPanel implements ActionListener{
 
                 }else if(plant.getType().equals(4)){ //wallnut gif
                     if(plant.getHealth()>=150){ //wallnut full life
-                        g.drawImage(img[37], xp-(pwidth+2)/2, yp-(pheight+4)/2, pwidth+2, pheight+5, this);
-                    }else{ //wallnut half life
                         g.drawImage(img[38], xp-(pwidth+2)/2, yp-(pheight+4)/2, pwidth+2, pheight+5, this);
+                    }else{ //wallnut half life
+                        g.drawImage(img[39], xp-(pwidth+2)/2, yp-(pheight+4)/2, pwidth+2, pheight+5, this);
                     }
 
                 }else if(plant.getType().equals(5)){ //cherrybomb
@@ -342,15 +342,18 @@ public class World extends JPanel implements ActionListener{
             player.draw(g2);
 
             //draw black&white plant menu
-            if(player.getCredits()<200){
-                g.drawImage(img[15], 33, 339, rwidth+2, rheight+2, this); //draw repeater g
-                if(player.getCredits()<150){
-                    g.drawImage(img[32], 30, 512, rwidth+7, rheight+6, this); //draw cherrybomb g
-                    if(player.getCredits()<100){
+            if(player.getCredits()<150){
+            	g.drawImage(img[32], 30, 512, rwidth+7, rheight+6, this); //draw cherrybomb g
+                if(player.getCredits()<100){
+                	g.drawImage(img[15], 33, 339, rwidth+2, rheight+2, this); //draw repeater g
+                    if(player.getCredits()<60){
                         g.drawImage(img[14], 34, 255, pwidth+2, pheight, this); //draw peashooter g
                         if(player.getCredits()<50){
-                            g.drawImage(img[13], 34, 164, swidth, sheight, this); //draw sunflower g
                             g.drawImage(img[36], 32, 426, swidth-1, sheight-2, this); //draw wallnut g
+                            if(player.getCredits() < 20) {
+                            	g.drawImage(img[13], 34, 164, swidth, sheight, this); //draw sunflower g
+                            	
+                            }
                         }
                     }
                 }
@@ -365,7 +368,7 @@ public class World extends JPanel implements ActionListener{
                 g.drawImage(img[21], mouse.getX(), mouse.getY()-70, 68, 70, this);
             }
 
-            //draw transparent plant following mouse position
+            //draw transparent plant following 마우스 포인트
             if(player.getChoice()==1){ //sunflower
                 g2.setComposite(AlphaComposite.SrcOver.derive(0.7f)); //set alpha to 0.7
                 g2.drawImage(img[2], mouse.getX()-swidth/2, mouse.getY()-sheight/2, swidth, sheight, this);
@@ -522,7 +525,7 @@ public class World extends JPanel implements ActionListener{
                     if(!sun_clicked){ //sun is not clicked
                         // check if mouse clicked plants
                         if(rec[3].contains(e.getPoint())) { //click sunflower
-                            if(player.getCredits()>=50){
+                            if(player.getCredits()>=20){
                                 Audio.seedlift(); //play seedlift sound
                                 player.setChoice((player.getChoice()==1) ? 0:1);
                             }else{
@@ -530,7 +533,7 @@ public class World extends JPanel implements ActionListener{
                                 player.setChoice(0);
                             }
                         }else if(rec[4].contains(e.getPoint())) { //click peashooter
-                            if(player.getCredits()>=100){
+                            if(player.getCredits()>=60){
                                 Audio.seedlift(); //play seedlift sound
                                 player.setChoice((player.getChoice()==2) ? 0:2);
                             }else{
@@ -538,7 +541,7 @@ public class World extends JPanel implements ActionListener{
                                 player.setChoice(0);
                             }
                         }else if(rec[5].contains(e.getPoint())) { //click repeater
-                            if(player.getCredits()>=200){
+                            if(player.getCredits()>=100){
                                 Audio.seedlift(); //play seedlift sound
                                 player.setChoice((player.getChoice()==3) ? 0:3);
                             }else{
@@ -653,15 +656,15 @@ public class World extends JPanel implements ActionListener{
         		img[0]=t.getImage(getClass().getResource("Assets/image/Background_night.png"));
         	}
             img[1]=t.getImage(getClass().getResource("Assets/image/Sun.png"));
-            img[2]=t.getImage(getClass().getResource("Assets/image/Sunflower.png"));
-            img[3]=t.getImage(getClass().getResource("Assets/image/Peashooter.png"));
-            img[4]=t.getImage(getClass().getResource("Assets/image/Repeater.png"));
-            img[5]=t.getImage(getClass().getResource("Assets/gif/Sunflower.gif"));
-            img[6]=t.getImage(getClass().getResource("Assets/gif/Peashooter.gif"));
-            img[7]=t.getImage(getClass().getResource("Assets/gif/Repeater.gif"));
+            img[2]=t.getImage(getClass().getResource("Assets/image/workman.png")); //마우스이벤트 불투명 이미지(일꾼
+            img[3]=t.getImage(getClass().getResource("Assets/image/archer1.png")); //마우스이벤트 불투명 이미지(아처
+            img[4]=t.getImage(getClass().getResource("Assets/image/mage.png"));
+            img[5]=t.getImage(getClass().getResource("Assets/gif/workman.gif")); //Sunflower를 일꾼으로 변경
+            img[6]=t.getImage(getClass().getResource("Assets/gif/archer.gif")); //Peashooter를 아처로 변경
+            img[7]=t.getImage(getClass().getResource("Assets/gif/mage.gif")); //Repeater를 마법사 변경
             img[8]=t.getImage(getClass().getResource("Assets/gif/Black_Werewolf_Walk.gif")); //좀비를 웨어울프로 변경
             img[9]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Walk.gif"));
-            img[10]=t.getImage(getClass().getResource("Assets/image/Pea_p.png"));
+            img[10]=t.getImage(getClass().getResource("Assets/image/arrow.png")); //화살로 변경
             img[11]=t.getImage(getClass().getResource("Assets/image/Wasted.png"));
             img[12]=t.getImage(getClass().getResource("Assets/image/Tryagain.png"));
             img[13]=t.getImage(getClass().getResource("Assets/image/Sunflower_g.png"));
@@ -686,10 +689,11 @@ public class World extends JPanel implements ActionListener{
             img[32]=t.getImage(getClass().getResource("Assets/image/Cherry_g.png"));
             img[33]=t.getImage(getClass().getResource("Assets/gif/Ghost_Walk.gif"));
             img[34]=t.getImage(getClass().getResource("Assets/image/Background_menu.png"));
-            img[35]=t.getImage(getClass().getResource("Assets/image/Wallnut.png"));
-            img[36]=t.getImage(getClass().getResource("Assets/image/Wallnut_g.png"));
+            img[35]=t.getImage(getClass().getResource("Assets/image/Warrior_Idle.png")); //마우스이벤트 불투명 이미지(전사
+            img[36]=t.getImage(getClass().getResource("Assets/image/Wallnut_g.png")); //Wallnut
             img[37]=t.getImage(getClass().getResource("Assets/gif/Red_Werewolf_Attack.gif"));
-            img[38]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif"));
+            img[38]=t.getImage(getClass().getResource("Assets/gif/warrior_Idle.gif")); //Wallnut를 전사
+            img[39]=t.getImage(getClass().getResource("Assets/gif/Wallnut_half.gif")); //Wallnut
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
