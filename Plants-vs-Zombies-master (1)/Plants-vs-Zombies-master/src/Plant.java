@@ -22,11 +22,11 @@ public class Plant<T> extends Actor{
         if(type.equals(1)){ //Sunflower
             super.health = 50;
         }else if(type.equals(2)){ //Peashooter
-            super.health = 50;
+            super.health = 80;
         }else if(type.equals(3)){ //Repeater
-            super.health = 70;
+            super.health = 120;
         }else if(type.equals(4)){ //Wallnut
-            super.health = 300;
+            super.health = 320;
         }else if(type.equals(5)){ //Cherrybomb
             super.health = 200;
             tcherry = new Thread(new CherryWaits()); 
